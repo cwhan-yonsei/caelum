@@ -1,0 +1,14 @@
+{% extends 'common/base.html' %}
+{% block title %}
+Sign Up - CAELUM
+{% endblock %}
+
+ {% block content %}
+ <div class=" acw3-min-height-100 acw3-max-width-840">
+     <form method="POST">
+         {% csrf_token %}
+         {{ form }}
+         <input type="submit" value="Submit">
+     </form>
+ </div>
+ {% endblock %}

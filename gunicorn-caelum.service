@@ -1,0 +1,12 @@
+[Unit]
+Description=caelum gunicorn daemon
+After=network.target
+
+[Service]
+User=cwahn
+Group=cwahn
+WorkingDirectory=/home/cwahn/yonsei/caelum
+ExecStart=/home/cwahn/.local/bin/gunicorn --access-logfile - --workers 8 --bind unix:/home/cwahn/yonsei/caelum/caelum.sock caelum.wsgi:application --reload --reload-engine=auto
+
+[Install]
+WantedBy=multi-user.target
