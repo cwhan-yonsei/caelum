@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login
+
+from .forms import UserCreationForm, UserChangeForm
 
 # Create your views here.
 def landing(request):
