@@ -35,3 +35,7 @@ class UserChangeForm(forms.ModelForm):
     def clean_password(self):
         return self.initial['password']
 
+class YonseiVerificationForm(forms.Form):
+    privacy_consent = forms.BooleanField(label='privacy_consent')
+    portal_id = forms.CharField(label='portal_id')
+    portal_password = forms.CharField(label='portal_password')
