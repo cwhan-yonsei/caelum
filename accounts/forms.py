@@ -38,4 +38,4 @@ class UserChangeForm(forms.ModelForm):
 class YonseiVerificationForm(forms.Form):
     privacy_consent = forms.BooleanField(label='privacy_consent')
     portal_id = forms.CharField(label='portal_id')
-    portal_password = forms.CharField(label='portal_password')
+    portal_pw = forms.CharField(label='portal_pw')
