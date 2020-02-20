@@ -138,6 +138,24 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 AUTH_USER_MODEL = 'accounts.User'
 
+
+# Email server
+
+EMAIL_HOST = 'smtp.gmail.com'
+
+EMAIL_PORT = '587'
+
+EMAIL_HOST_USER = 'automated.server.caelum@gmail.com'
+
+EMAIL_HOST_PASSWORD = 'A!S@d3f42559cae'
+
+EMAIL_USE_TLS = True
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+# Markdownx
+
 MARKDOWNX_URLS_PATH = '/markdownx/markdownify/'
 
 MARKDOWNX_UPLOAD_URLS_PATH = '/markdownx/upload/'

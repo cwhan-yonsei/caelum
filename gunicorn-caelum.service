@@ -6,7 +6,7 @@ After=network.target
 User=cwahn
 Group=cwahn
 WorkingDirectory=/home/cwahn/yonsei/caelum
-ExecStart=/home/cwahn/yonsei/yonsei/bin/gunicorn --access-logfile - --workers 8 --bind unix:/home/cwahn/yonsei/caelum/caelum.sock caelum.wsgi:application --reload --reload-engine=auto
+ExecStart=/home/cwahn/yonsei/yonsei/bin/gunicorn --access-logfile - --log-syslog --workers 8 --bind unix:/home/cwahn/yonsei/caelum/caelum.sock caelum.wsgi:application --reload --reload-engine=auto --timeout 120
 
 [Install]
 WantedBy=multi-user.target

@@ -62,5 +62,5 @@ def verify(portal_id, portal_pw):
         return False, 'not y', 'not y'
 
 
-result = verify('2016145118', 'A!S@d3f42559')
-print(result[0], result[1], result[2])
+#result = verify('2016145118', 'A!S@d3f42559')
+#print(result[0], result[1], result[2])

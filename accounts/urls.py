@@ -7,4 +7,5 @@ urlpatterns = [
     path('', views.landing, name='landing'),
     path('verification/', views.verification, name='verification'),
     path('signup/', views.sign_up, name='sign_up'),
+    path('activate/<str:uidb64>/<str:token>', views.activate, name='activate'),
 ]

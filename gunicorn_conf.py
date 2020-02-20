@@ -6,7 +6,7 @@ workers = multiprocessing.cpu_count() * 2
 
 threads = multiprocessing.cpu_count() * 2
 
-timeout = 15
+timeout = 90
 
 keep_alive = 2
 
