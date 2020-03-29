@@ -1,0 +1,32 @@
+{% extends 'common/base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block account_mobile %}
+<div class=" acw3-container">
+    <div>
+        <p>{{ user.username }}</p>
+    </div>
+    <div>
+        <small>{{ user.name }} <br>{{ user.email }}</small>
+    </div>
+    <div>
+        <a href="{% url 'accounts:sign_out' %}">
+            <p>Sign Out</p>
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block account %}
+
+<a href="{% url 'accounts:sign_out' %}" class=" acw3-bar-item">
+    Sign Out
+</a>
+<small class=" acw3-bar-item">
+    {{ user.username }}
+</small>
+
+{% endblock %}
+
+{% block content %}{% endblock %}

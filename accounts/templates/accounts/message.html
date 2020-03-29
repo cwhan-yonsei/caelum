@@ -2,15 +2,33 @@
 {% block title %} CAELUM {% endblock%} 
 {% block content %}
 <div class=" acw3-min-height-100 acw3-max-width-840">
-  <div>
+  <div class=" acw3-container">
     <h1>
-      {{ message_title }}
+      {{ title }}
     </h1>
   </div>
-  <div>
+  <div class=" acw3-container">
     <p>
-      {{ message_content }}
+      {{ content | linebreaks}}
     </p>
   </div>
+  <div class=" acw3-container">
+    <a 
+    href="
+    {% if confirm == 'landing'%}
+    {% url 'accounts:landing' %}
+    {% elif confirm == 'index'%}
+    {% url 'air:index' %}
+    {% elif confirm == 'back' %}
+    {{request.META.HTTP_REFERER}}
+    {% endif %}
+    " 
+    class=" acw3-button">
+    &nbsp;OK&nbsp;
+    </a>
+  </div>
 </div>
+
+
+
 {% endblock %}

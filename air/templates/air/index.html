@@ -1,9 +1,24 @@
-{% extends 'common/base.html' %}
+{% extends 'air/account_widget.html' %}
 {% block title %}
 CAELUM - The Sky of Eagles
 {% endblock %}
 {% block content %}
  <div class=" acw3-container acw3-max-width-840 acw3-min-height-100">
      <h1 class=" acw3-text-c">Comming Soon :)</h1>
+    <a href="{% url 'air:question' %}" class=" acw3-right">Ask question</a>
+     {% for article in articles %}
+
+     <a href="{% url 'air:article' article.pk %}" class=" acw3-text-none"
+       ><h3>{{ article.get_title }}</h3></a
+     >
+     <p>{{ article.get_preview | truncatechars:230 }}</p>
+     <div class=" acw3-bar">
+       <small  class=" acw3-right">
+         {{ article.date_created  | date:'Y.m.d' }} | {{ article.hit_count }} views
+       </small>
+     </div>
+     <hr />
+   {% endfor %}
  </div>
-{% endblock %}
+
+{% endblock %} 

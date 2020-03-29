@@ -69,8 +69,15 @@
             <input type="submit" value="Sign In" class=" acw3-text-white" />
           </div>
           <div class=" acw3-text-white">
-            Don't have a account?
-            <a href="{% url 'accounts:verification' %}">Sign Up!</a>
+            <p>
+              Don't have an account?
+              <a href="{% url 'accounts:verification' %}">Sign Up!</a>
+            </p>
+          </div>
+          <div class=" acw3-text-white">
+            <p>
+              <a href="{% url 'accounts:find_account' %}">Forgot account?</a>
+            </p>
           </div>
         </form>
       </div>

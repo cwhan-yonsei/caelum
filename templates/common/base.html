@@ -54,17 +54,36 @@
       class=" acw3-bar-block acw3-sidebar acw3-hide-medium acw3-hide-large acw3-animate-right acw3-card"
       style="display:none; right:0;"
     >
-      <a href="javascript:void(0)" onclick="close_sidebar()">
+    <div>
+      <a href="javascript:void(0)" onclick="close_sidebar()" class=" acw3-right acw3-padding">
         Close X
       </a>
+    </div>
+      
+      {% block account_mobile %}{% endblock %}
     </nav>
 
     <!-- Top navbar -->
-    <nav class=" acw3-container acw3-card acw3-text-c">
+    <nav class="acw3-card acw3-text-c">
       <div class=" acw3-bar acw3-max-width-1200">
-        <a href="" class=" acw3-text-none acw3-left acw3-padding">
+        <a href="{% url 'air:index' %}" class=" acw3-bar-item acw3-text-none acw3-left acw3-padding">
           <span class=" acw3-logo acw3-text-c">CAELUM</span>
         </a>
+
+        <a
+          href="javascript:void(0)"
+          onclick="open_sidebar()"
+          class=" acw3-hide-medium acw3-hide-large acw3-right acw3-text-none acw3-padding-16"
+          ><i class="fas fa-bars acw3-large"></i>&nbsp;&nbsp;&nbsp;</a
+        >
+
+        <div class=" acw3-bar-item acw3-hide-medium acw3-hide-small acw3-right">
+          {% block account %}{% endblock %}
+        </div>
+
+        <div>
+          <span></span>
+        </div>     
       </div>
     </nav>
 
@@ -76,7 +95,7 @@
         <div class=" acw3-container acw3-row">
           <div class=" acw3-third">
             <div>
-              <a href="" class=" acw3-text-none acw3-left acw3-padding-16">
+              <a href="{% url 'air:index' %}" class=" acw3-text-none acw3-left acw3-padding-16">
                 <span class=" acw3-logo acw3-text-c">CAELUM</span>
               </a>
             </div>

@@ -1,0 +1,123 @@
+{% extends 'air/account_widget.html' %} 
+{% load markdown_extras %} 
+{% block title %} CAELUM - The Sky of Eagles {% endblock %} 
+{% block content %}
+
+<div class=" acw3-container acw3-max-width-840 acw3-min-height-100">
+  <a href="{% url 'air:answer' article.pk %}">Answer</a>
+  <div class=" acw3-padding-32">
+    <h1>{{ article.get_title}}</h1>
+  </div>
+  <div class=" acw3-bar">
+    <small class=" acw3-right"
+      >{{ article.author.username }} <br />
+      {{ article.date_created | date:'Y.m.d'}} | {{ article.hit_count }}
+      views</small
+    >
+  </div>
+  <div>
+    {{ article.get_content | markdown | safe }}
+  </div>
+  <div>
+    {% for tag in article.tags.all %}
+    <a href="{% url 'article_list' tag %}" class=" acw3-text-none acw3-text-a">
+      &nbsp;#{{ tag }}&nbsp;
+    </a>
+    {% endfor %} {% if article.author == user %}
+    <form action="{% url 'air:edit_article' article.pk %}" method="GET">
+      {% csrf_token %}
+      <input type="submit" value="edit" />
+    </form>
+    <form action="{% url 'air:del_article' article.pk %}" method="POST">
+      {% csrf_token %}
+      <input type="submit" value="delete" />
+    </form>
+    {% endif %}
+
+    <div id="comments">
+      {% for comment in article.comments.all %}
+      <div>
+        {{ comment.content }} <br />
+        {{ comment.author.username }} <br />
+        {{ comment.date_created }} {% if comment.author == user %}
+        <form action="{% url 'air:del_comment' comment.pk %}" method="POST">
+          {% csrf_token %}
+          <input type="submit" value="delete" />
+        </form>
+        {% endif %}
+      </div>
+      {% endfor %}
+      <a
+        href="javascript:void(0)"
+        onclick="add_comment(this)"
+        class="add_comment"
+        >Add Comment</a
+      >
+      <div id="comment_form" style="display: none;">
+        <form method="POST" action="{% url 'air:comment' article.pk %}">
+          {% csrf_token %} {{ form }}
+          <input type="submit" value="Add Comment" />
+        </form>
+      </div>
+    </div>
+
+    <br />
+  </div>
+
+  {% for answer in answers.all %}
+  <div class=" acw3-padding-32">
+    <h1>{{ answer.get_title }}</h1>
+  </div>
+  <div class=" acw3-bar">
+    <small class=" acw3-right"
+      >{{ answer.author.username }} <br />
+      {{ answer.date_created | date:'Y.m.d'}}</small
+    >
+  </div>
+  <div>
+    {{ answer.get_content | markdown | safe }}
+  </div>
+
+  {% if answer.author == user %}
+  <form action="{% url 'air:edit_article' article.pk %}" method="GET">
+    {% csrf_token %}
+    <input type="submit" value="edit" />
+  </form>
+  <form action="{% url 'air:del_article' answer.pk %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="delete" />
+  </form>
+  {% endif %}
+
+  <div id="comments">
+    {% for comment in answer.comments.all %}
+    <div>
+      {{ comment.content }} <br />
+      {{ comment.author.username }} <br />
+      {{ comment.date_created }} {% if comment.author == user %}
+      <form action="{% url 'air:del_comment' comment.pk %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="delete" />
+      </form>
+      {% endif %}
+    </div>
+    {% endfor %}
+
+    <a href="javascript:void(0)" onclick="add_comment(this)"> Add Comment</a>
+    <div id="comment_form" style="display: none;">
+      <form method="POST" action="{% url 'air:comment' answer.pk %}">
+        {% csrf_token %} {{ form }}
+        <input type="submit" value="Add Comment" />
+      </form>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<script>
+  function add_comment(here) {
+    here.style.display = "none";
+    here.nextSibling.nextSibling.style.display = "block";
+  }
+</script>
+{% endblock %}

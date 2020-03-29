@@ -1,0 +1,14 @@
+{% extends 'air/account_widget.html' %} 
+{% load markdown_extras %} 
+{% block title %} CAELUM - The Sky of Eagles {% endblock %} 
+
+{% block content %}
+<div class=" acw3-container acw3-max-width-840 acw3-min-height-100">
+    <form method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Submit" />
+    </form>
+    {{ form.media }}
+</div>
+{% endblock %}

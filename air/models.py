@@ -6,8 +6,16 @@ from datetime import datetime, timedelta
 from markdownx.models import MarkdownxField
 from taggit.managers import TaggableManager
 
+from accounts.models import User
+
+import re
+
 # Create your models here.
 class Article(models.Model):
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+    )
     content = MarkdownxField()
     tags = TaggableManager(
         blank=True,
@@ -15,12 +23,11 @@ class Article(models.Model):
     date_created = models.DateTimeField(
         auto_now_add=True,
     )
-    view_count = models.IntegerField(
+    hit_count = models.IntegerField(
         default=0, 
     )
-    question = models.BooleanField(
-        blank=False,
-        null=False,
+    is_answer = models.BooleanField(
+        default=False,
     )
 
     # For answer articles
@@ -30,6 +37,7 @@ class Article(models.Model):
         blank=True,
         null=True,
         on_delete=models.CASCADE,
+        related_name='answers',
     )
     accepted = models.BooleanField(
         default=False,
@@ -56,10 +64,9 @@ class Article(models.Model):
 
 
 class ArticleHitCount(models.Model):
-    ip = models.CharField(
-        max_length=16,
-        default=None,
-        null=True
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
     )
     article = models.ForeignKey(
         Article,
@@ -73,15 +80,18 @@ class ArticleHitCount(models.Model):
         blank=True,
     )
 
-
-
 class Comment(models.Model):
     parent = models.ForeignKey(
         Article,
         on_delete=models.CASCADE,
+        related_name='comments',
     )
-    contnent = models.CharField(
-        max_length=160,
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+    )
+    content = models.CharField(
+        max_length=140,
         blank=False,
         null=False,
     )

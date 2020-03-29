@@ -138,6 +138,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 AUTH_USER_MODEL = 'accounts.User'
 
+LOGIN_URL = '/accounts/'
+
 
 # Email server
 
@@ -167,3 +169,4 @@ MARKDOWNX_IMAGE_MAX_SIZE = {
     'quality': 100
 }
 
+ 
