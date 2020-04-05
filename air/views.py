@@ -104,14 +104,11 @@ def edit_article(request, pk):
      article = Article.objects.get(pk=pk)
 
      if request.method == 'POST':
-          form = ArticleCreationForm(
-               request.POST,
-               author=user,
-               is_answer=True,
-               parent=article.parent,
-               )
+          form = ArticleCreationForm(request.POST)
           if form.is_valid():
-               article = form.save()
+               article.content = form.cleaned_data['content']
+               article.tags = form.cleaned_data['tags']
+               article.save()
                return redirect('air:article', pk=article.pk)
 
      elif request.method == "GET":
