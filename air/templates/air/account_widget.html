@@ -5,7 +5,9 @@
 {% block account_mobile %}
 <div class=" acw3-container">
     <div>
-        <p>{{ user.username }}</p>
+        <a href="{% url 'accounts:account_manage' %}">
+            <p>{{ user.username }}</p>
+        </a>
     </div>
     <div>
         <small>{{ user.name }} <br>{{ user.email }}</small>
@@ -23,9 +25,10 @@
 <a href="{% url 'accounts:sign_out' %}" class=" acw3-bar-item">
     Sign Out
 </a>
-<small class=" acw3-bar-item">
+<a href="{% url 'accounts:account_manage' %}" class=" acw3-bar-item">
     {{ user.username }}
-</small>
+</a>
+
 
 {% endblock %}
 

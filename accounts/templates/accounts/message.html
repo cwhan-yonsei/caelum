@@ -20,7 +20,9 @@
     {% elif confirm == 'index'%}
     {% url 'air:index' %}
     {% elif confirm == 'back' %}
-    {{request.META.HTTP_REFERER}}
+    {{ request.META.HTTP_REFERER }}
+    {% else %}
+    {% url confirm_url_name %}
     {% endif %}
     " 
     class=" acw3-button">

@@ -10,6 +10,7 @@ from .tokens import account_activation_token, pw_reset_token
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from django.http import Http404
+from django.contrib.auth.decorators import login_required
 
 from .forms import UserCreationForm, UserChangeForm, YonseiVerificationForm, PasswordResetForm
 from .models import User
@@ -232,12 +233,12 @@ def pw_reset(request, uidb64, token):
             request.session['uid'] = False
 
             context = {
-                    'title': "Your password has been chaged",
-                    'content': 'Now you can sign in with your new password.',
-                    'confirm': 'index',
-                }
+                'title': "Your password has been changed",
+                'content': 'Now you can sign in with your new password.',
+                'confirm': 'index',
+            }
             return render(request, 'accounts/message.html', context)
-        
+
         else:
             form = PasswordResetForm()
             user = User.objects.get(pk=request.session['uid'])
@@ -247,7 +248,6 @@ def pw_reset(request, uidb64, token):
                 'error': 'Invalid password or those passwords did not match. Please try again.',
             }
             return render(request, 'accounts/pw-reset.html', context)
-
 
     elif request.method == 'GET':
         try:
@@ -265,12 +265,62 @@ def pw_reset(request, uidb64, token):
             request.session['uid'] = str(uid)
             return render(request, 'accounts/pw-reset.html', context)
 
-        else: # invaild token
+        else:  # invaild token
             raise Http404("Invalid access :(")
             return redirect('accounts:landing')
 
 
-   
+@login_required
 def sign_out(request):
     logout(request)
+    return redirect('accounts:landing')
+
+
+@login_required
+def account_manage(request):
+    user = request.user
+    context = {
+        'user': user,
+    }
+    return render(request, 'accounts/account-manage.html', context)
+
+
+@login_required
+def pw_change(request):
+    user = request.user
+    current_site = get_current_site(request)
+    mail_subject = 'Caelum password reset link.'
+    message = render_to_string('accounts/pw-reset-email.html', {
+        'user': user,
+        'domain': current_site.domain,
+        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        'token': pw_reset_token.make_token(user),
+    })
+    to_email = user.email
+    email = EmailMessage(
+        mail_subject, message, to=[to_email]
+    )
+    email.send()
+
+    context = {
+        'title': 'Password reset email has been sent!',
+        'content': "An email with password change link for your account has been sent to " + str(user.email) + ". Through the link in the mail, you could reset the password. The link will be valid up to two days.",
+        'confirm': 'back',
+    }
+    return render(request, 'accounts/message.html', context)
+
+@login_required
+def account_delete_confirmation(request):
+    user = request.user
+    context = {
+        'title': 'WARNING: You are about to DELETE your account!',
+        'content': 'You are about to permanaently delete your account. There is no way to reverse this action once you confirm. Please be cautious. The materials which will be deleted with your account will be: \nAll of your articles(questions and answers) \nAll of your comments \n If you would like to proceed, press the DELETE button below.',
+        'confirm_url_name': 'accounts:delete_account',
+    }
+    return render(request, 'accounts/message.html', context)
+
+@login_required
+def delete_account(request):
+    user = request.user
+    user.delete()
     return redirect('accounts:landing')

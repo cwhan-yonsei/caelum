@@ -11,4 +11,9 @@ urlpatterns = [
     path('findaccount/', views.find_account, name='find_account'),
     path('pwreset/<str:uidb64>/<str:token>', views.pw_reset, name='pw_reset'),
     path('signout', views.sign_out, name='sign_out'),
+    path('account_manage', views.account_manage, name='account_manage'),
+    path('pw_change/', views.pw_change, name='pw_change'),
+    path('account_delete_confirmation', views.account_delete_confirmation, name='account_delete_confirmation'),
+    path('delete_account/', views.delete_account, name='delete_account')
+    
 ]

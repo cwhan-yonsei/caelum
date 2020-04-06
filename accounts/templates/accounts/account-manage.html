@@ -1,0 +1,18 @@
+{% extends 'air/account_widget.html' %}
+{% block title %} Account - CAELUM {% endblock%}
+{% block content %}
+<div class=" acw3-min-height-100 acw3-max-width-840">
+    <div class=" acw3-container">
+        <h1>{{user.username}}</h1>
+    </div>
+
+    <div class=" acw3-container">
+        <p>{{user.email}}</p><br>
+        <p>{{user.name}}</p><br>
+        <p>{{user.portal_id}}</p><br>
+        <p>{{user.dept_major}}</p><br>
+        <a href="{% url 'accounts:pw_change' %}">Password reset</a><br>
+        <a href="{% url 'accounts:account_delete_confirmation' %}">Delete account</a><br>
+    </div>
+</div>
+{% endblock %}
