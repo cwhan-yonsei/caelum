@@ -12,7 +12,7 @@ from django.core.mail import EmailMessage
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
 
-from .forms import UserCreationForm, UserChangeForm, YonseiVerificationForm, PasswordResetForm
+from .forms import *
 from .models import User
 
 from .yonsei_auth import verify
@@ -324,3 +324,31 @@ def delete_account(request):
     user = request.user
     user.delete()
     return redirect('accounts:landing')
+
+@login_required
+def change_username(request):
+    if request.method == 'POST':
+        user = request.user
+        form = UsernameChangeForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            # What if username is not unique?
+            return redirect('accounts:account_manage')
+
+        else: 
+            form = UsernameChangeForm()
+            context = {
+                'error': 'Invalid username or already taken by someone. Username should containes only letters, numbers, underscores or hyphens',
+                'email': user.email,
+                'form': form,
+            }
+            return render(request, 'accounts/username-change.html', context)
+
+    elif request.method =='GET':
+        user = request.user
+        form = UsernameChangeForm()
+        context = {
+                'email': user.email,
+                'form': form,
+            }
+        return render(request, 'accounts/username-change.html', context)

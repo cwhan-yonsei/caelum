@@ -81,3 +81,18 @@ class PasswordResetForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+class UsernameChangeForm(forms.ModelForm):
+    username = forms.CharField(label='New username', widget=forms.TextInput)
+
+    class Meta:
+        model = User
+        fields = ('username',)
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.username = self.cleaned_data['username']
+        if commit:
+            user.save()
+        return user
+    

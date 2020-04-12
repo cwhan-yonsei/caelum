@@ -60,6 +60,7 @@ class User(AbstractBaseUser):
     username = models.SlugField(
         max_length=30,
         null=True,
+        unique=True,
     )
 
     # Not active until email verification
