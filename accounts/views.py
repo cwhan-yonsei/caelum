@@ -127,6 +127,20 @@ def sign_up(request):
                 'confirm': 'landing',
             }
             return render(request, 'accounts/message.html', context)
+            
+        else:
+            errors = form.errors
+            if request.session['verification'] == True:
+                context = {
+                    'form': UserCreationForm(),
+                    'portal_id': request.session['pid'],
+                    'name': request.session['name'],
+                    'dept_major': request.session['dept_major'],
+                    'error': str(errors.items()), 
+                }
+                return render(request, 'accounts/sign-up.html', context)
+            else:
+                return redirect('accounts:landing')
 
     elif request.method == 'GET':
         if request.session['verification'] == True:

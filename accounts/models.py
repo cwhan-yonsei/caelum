@@ -62,6 +62,11 @@ class User(AbstractBaseUser):
         null=True,
         unique=True,
     )
+    reputation = models.IntegerField(
+        blank=False,
+        null=False,
+        default=0,
+    )
 
     # Not active until email verification
     is_email_verified = models.BooleanField(default=False)

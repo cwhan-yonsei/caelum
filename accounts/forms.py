@@ -58,7 +58,7 @@ class AdminUserChangeForm(forms.ModelForm):
 class YonseiVerificationForm(forms.Form):
     privacy_consent = forms.BooleanField(label='privacy_consent')
     portal_id = forms.CharField(label='portal_id')
-    portal_pw = forms.CharField(label='portal_pw')
+    portal_pw = forms.CharField(label='portal_pw', widget=forms.PasswordInput)
 
 class PasswordResetForm(forms.ModelForm):
     password1 = forms.CharField(label='New password', widget=forms.PasswordInput)
