@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.core.exceptions import PermissionDenied
 from django.contrib.sites.shortcuts import get_current_site
@@ -22,21 +21,21 @@ from .yonsei_auth import verify
 
 def landing(request):
     if request.method == 'POST':
-        form = AuthenticationForm(request, request.POST)
+        form = SignInForm(request, request.POST)
         if form.is_valid():
             user = form.get_user()
             if user.is_email_verified:
                 login(request, user)
                 return redirect('air:index')
             else:  # valid but pendig email verification
-                form = AuthenticationForm()
+                form = SignInForm()
                 context = {
                     'form': form,
                     'account_error': 'Email verification is required. Please cheack your email for verification link.',
                 }
                 return render(request, 'accounts/landing.html', context)
         else:
-            form = AuthenticationForm()
+            form = SignInForm()
             context = {
                 'form': form,
                 'account_error': 'Invalid account.',
@@ -44,7 +43,7 @@ def landing(request):
             return render(request, 'accounts/landing.html', context)
 
     elif request.method == 'GET':
-        form = AuthenticationForm()
+        form = SignInForm()
         context = {
             'form': form,
         }

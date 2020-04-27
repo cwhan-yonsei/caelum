@@ -1,8 +1,18 @@
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.forms.utils import ErrorList
+from django.contrib.auth.forms import AuthenticationForm, UsernameField
+from django.utils.translation import gettext, gettext_lazy as _
 
 from .models import User
+
+class SignInForm(AuthenticationForm):
+    username = UsernameField(widget=forms.TextInput(attrs={'autofocus': True, 'autocomplete':'off'}))
+    password = forms.CharField(
+        label=_("Password"),
+        strip=False,
+        widget=forms.PasswordInput(attrs={'autocomplete': 'current-password', 'autocomplete':'off'}),
+    )
 
 class UserCreationForm(forms.ModelForm):
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
